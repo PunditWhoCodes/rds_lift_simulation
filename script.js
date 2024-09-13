@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const liftsContainer = document.getElementById('lifts-container');
 
     let floors, lifts, liftStates;
-    let floorStates = {}; // New object to track floor states
+    let floorStates = {}; 
 
     function initializeLiftStates(numLifts) {
         return Array(numLifts).fill().map((_, index) => ({
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
             targetFloors: [],
             isMoving: false,
             doorsOpen: false,
-            direction: 'idle' // 'up', 'down', or 'idle'
+            direction: 'idle' 
         }));
     }
 
@@ -38,9 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
             floorStates[floorNumber] = { up: false, down: false };
         }
         
-        // Check if this direction has already called a lift
+        
         if (floorStates[floorNumber][direction]) {
-            alert(`A lift has already been called for floor ${floorNumber+1} in the ${direction} direction.`);
+            console.log(`A lift has already been called for floor ${floorNumber+1} in the ${direction} direction.`);
             return;
         }
 
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ).length;
 
         if (liftsOnFloor >= 2) {
-            alert(`Maximum number of lifts already called to floor ${floorNumber+1}`);
+            console.log(`Maximum number of lifts already called to floor ${floorNumber+1}`);
             return;
         }
 
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!lift.targetFloors.includes(floorNumber)) {
                 lift.targetFloors.push(floorNumber);
                 lift.direction = direction;
-                floorStates[floorNumber][direction] = true; // Mark this direction as having called a lift
+                floorStates[floorNumber][direction] = true; 
                 if (!lift.isMoving) {
                     moveLift(availableLift);
                 }
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function animateLiftMovement(liftIndex, targetFloor, moveTime) {
         return new Promise(resolve => {
             const liftElement = document.querySelector(`.lift-shaft:nth-child(${liftIndex + 1}) .lift`);
-            const floorHeight = 100; // Height of each floor in pixels
+            const floorHeight = 100; 
             const targetPosition = (floors - 1 - targetFloor) * floorHeight;
 
             liftElement.style.transition = `top ${moveTime}ms linear`;
@@ -86,17 +86,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const leftDoor = liftElement.querySelector('.lift-door.left');
             const rightDoor = liftElement.querySelector('.lift-door.right');
 
-            // Open doors
+            
             leftDoor.classList.add('open');
             rightDoor.classList.add('open');
 
-            // Wait for 2 seconds
+            
             setTimeout(() => {
-                // Close doors
+                
                 leftDoor.classList.remove('open');
                 rightDoor.classList.remove('open');
 
-                // Wait for another 2 seconds before resolving
+                
                 setTimeout(resolve, 2000);
             }, 2000);
         });
@@ -109,22 +109,22 @@ document.addEventListener('DOMContentLoaded', () => {
         while (lift.targetFloors.length > 0) {
             const targetFloor = lift.targetFloors[0];
             const floorsToMove = Math.abs(targetFloor - lift.currentFloor);
-            const moveTime = floorsToMove * 1000; // 1 second per floor
+            const moveTime = floorsToMove * 1000; 
 
             await animateLiftMovement(liftIndex, targetFloor, moveTime);
             lift.currentFloor = targetFloor;
 
-            // Always open and close doors when arriving at a floor
+           
             await openCloseDoors(liftIndex);
 
             lift.targetFloors.shift();
 
-            // Reset floor state after servicing the floor
+            
             if (floorStates[targetFloor]) {
                 floorStates[targetFloor] = { up: false, down: false };
             }
 
-            // Check if there are any pending requests on the current floor
+            
             if (floorStates[lift.currentFloor] && (floorStates[lift.currentFloor].up || floorStates[lift.currentFloor].down)) {
                 await openCloseDoors(liftIndex);
                 floorStates[lift.currentFloor] = { up: false, down: false };
@@ -139,17 +139,17 @@ document.addEventListener('DOMContentLoaded', () => {
         floors = parseInt(document.getElementById('floors').value);
         lifts = parseInt(document.getElementById('lifts').value);
 
-        if (isNaN(floors) || isNaN(lifts) || floors < 2 || lifts < 1) {
-            alert('Please enter valid numbers for floors (min 2) and lifts (min 1).');
+        if (isNaN(floors) || isNaN(lifts) || floors < 1 || lifts < 1) {
+            alert('Please enter valid numbers for floors (min 1) and lifts (min 1).');
             return;
         }
 
         liftStates = initializeLiftStates(lifts);
-        floorStates = {}; // Reset floor states
+        floorStates = {}; 
         floorsContainer.innerHTML = '';
         liftsContainer.innerHTML = '';
 
-        // Create floors
+        
         for (let i = 0; i < floors; i++) {
             const floor = document.createElement('div');
             floor.className = 'floor';
@@ -182,11 +182,11 @@ document.addEventListener('DOMContentLoaded', () => {
             floorsContainer.appendChild(floor);
         }
 
-        // Create lifts
+        
         for (let i = 0; i < lifts; i++) {
             const liftShaft = document.createElement('div');
             liftShaft.className = 'lift-shaft';
-            liftShaft.style.height = `${floors * 100}px`; // Set height based on number of floors
+            liftShaft.style.height = `${floors * 100}px`; 
 
             const lift = document.createElement('div');
             lift.className = 'lift';
@@ -206,20 +206,20 @@ document.addEventListener('DOMContentLoaded', () => {
             liftShaft.appendChild(lift);
             liftsContainer.appendChild(liftShaft);
 
-            // Set initial position of the lift to the ground floor
+            
             lift.style.top = `${(floors - 1) * 100}px`;
         }
 
-        // Set container heights
+        
         floorsContainer.style.height = `${floors * 100}px`;
         liftsContainer.style.height = `${floors * 100}px`;
         
-        // Ensure lifts container is scrollable horizontally
+        
         liftsContainer.style.overflowX = 'auto';
         liftsContainer.style.width = '100%';
         
-        // Set a minimum width for the lifts container to ensure scrolling
-        const minWidth = lifts * 80 + (lifts - 1) * 20; // 80px per lift + 20px gap
+        
+        const minWidth = lifts * 80 + (lifts - 1) * 20; 
         liftsContainer.style.minWidth = `${minWidth}px`;
     });
 });
