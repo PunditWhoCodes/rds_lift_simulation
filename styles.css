@@ -1,0 +1,131 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+}
+
+.input-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input[type="number"] {
+    width: 50px;
+}
+
+.simulation-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 20px;
+}
+
+.floors-container {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+}
+
+.floor {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    height: 100px;
+    width: 200px;
+}
+
+.floor-number {
+    width: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.lift-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-left: 10px;
+}
+
+.lift-button {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 60px;
+}
+
+.lift-button:hover {
+    background-color: #45a049;
+}
+
+.lifts-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+}
+
+.lift-shaft {
+    width: 80px;
+    border: 1px solid #000;
+    position: relative;
+    overflow: hidden;
+}
+
+.lift {
+    width: 100%;
+    height: 100px;
+    background-color: #3498db;
+    position: absolute;
+    bottom: 0;
+    transition: top 0.1s linear;
+}
+
+.lift-doors {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.lift-door {
+    width: 50%;
+    height: 100%;
+    background-color: #2980b9;
+    transition: transform 1s;
+}
+
+.lift-door.left {
+    transform-origin: left;
+}
+
+.lift-door.right {
+    transform-origin: right;
+}
+
+.lift-door.open.left {
+    transform: translateX(-100%);
+}
+
+.lift-door.open.right {
+    transform: translateX(100%);
+}
