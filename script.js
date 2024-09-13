@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         floors = parseInt(document.getElementById('floors').value);
         lifts = parseInt(document.getElementById('lifts').value);
 
-        if (isNaN(floors) || isNaN(lifts) || floors < 1 || lifts < 1) {
+        if (isNaN(floors) || isNaN(lifts) || floors < 2 || lifts < 1) {
             alert('Please enter valid numbers for floors (min 1) and lifts (min 1).');
             return;
         }
