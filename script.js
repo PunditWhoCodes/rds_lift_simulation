@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         
         if (floorStates[floorNumber][direction]) {
-            console.log(`A lift has already been called for floor ${floorNumber+1} in the ${direction} direction.`);
+            alert(`A lift has already been called for floor ${floorNumber+1} in the ${direction} direction.`);
             return;
         }
 
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ).length;
 
         if (liftsOnFloor >= 2) {
-            console.log(`Maximum number of lifts already called to floor ${floorNumber+1}`);
+            alert(`Maximum number of lifts already called to floor ${floorNumber+1}`);
             return;
         }
 
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lifts = parseInt(document.getElementById('lifts').value);
 
         if (isNaN(floors) || isNaN(lifts) || floors < 2 || lifts < 1) {
-            alert('Please enter valid numbers for floors (min 1) and lifts (min 1).');
+            alert('Please enter valid numbers for floors (min 2) and lifts (min 1).');
             return;
         }
 
